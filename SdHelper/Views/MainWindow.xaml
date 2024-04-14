@@ -2,7 +2,10 @@
     x:Class="SdHelper.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:SdHelper.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
@@ -11,6 +14,10 @@
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     mc:Ignorable="d">
+
+    <i:Interaction.Behaviors>
+        <behaviors:FileDropBehavior />
+    </i:Interaction.Behaviors>
 
     <TabControl>
         <TabItem Header="Model Helper">
@@ -28,7 +35,14 @@
                 <ListView
                     Grid.Row="0"
                     Grid.RowSpan="2"
-                    Grid.Column="0" />
+                    Grid.Column="0"
+                    ItemsSource="{Binding ModelFileInfos}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type io:FileInfo}">
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
                 <Image
                     Grid.Row="0"
