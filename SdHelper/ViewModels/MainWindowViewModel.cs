@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Prism.Commands;
 using Prism.Mvvm;
 using SdHelper.Models;
@@ -11,7 +14,7 @@ namespace SdHelper.ViewModels
     {
         private string title = "Prism Application";
         private FileInfoWrapper selectedFileInfo;
-        private string previewImagePath;
+        private ImageSource previewImageSource;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
@@ -29,16 +32,16 @@ namespace SdHelper.ViewModels
                     var exceptImagePath = value.GetFullNameWithoutExtension() + ".png";
                     if (File.Exists(exceptImagePath))
                     {
-                        PreviewImagePath = exceptImagePath;
+                        PreviewImageSource = new BitmapImage(new Uri(exceptImagePath));
                     }
                 }
             }
         }
 
-        public string PreviewImagePath
+        public ImageSource PreviewImageSource
         {
-            get => previewImagePath;
-            private set => SetProperty(ref previewImagePath, value);
+            get => previewImageSource;
+            private set => SetProperty(ref previewImageSource, value);
         }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
@@ -61,8 +64,9 @@ namespace SdHelper.ViewModels
             }
 
             var imageFile = new FileInfo(imageFilePath);
-            PreviewImagePath = imageFilePath;
-            File.Copy(imageFile.FullName, $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png");
+            var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
+            File.Copy(imageFile.FullName, destPath);
+            PreviewImageSource = new BitmapImage(new Uri(destPath));
         }
     }
 }
