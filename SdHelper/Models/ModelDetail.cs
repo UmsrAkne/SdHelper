@@ -1,4 +1,5 @@
-using System.Text.Json;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace SdHelper.Models
 {
@@ -15,9 +16,10 @@ namespace SdHelper.Models
         public string Note { get; set; } = string.Empty;
 
         // JSON文字列にシリアル化するメソッド
-        public string SerializeToJson()
+        public void SerializeToJson(string filePath)
         {
-            return JsonSerializer.Serialize(this);
+            var str = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText(filePath, str);
         }
     }
 }

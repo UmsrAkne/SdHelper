@@ -36,7 +36,8 @@
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="0"
-                    ItemsSource="{Binding ModelFileInfos}">
+                    ItemsSource="{Binding ModelFileInfos}"
+                    SelectedItem="{Binding SelectedFileInfo}">
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="{x:Type io:FileInfo}">
                             <TextBlock Text="{Binding Name}" />
@@ -71,6 +72,12 @@
                         <TextBlock Text="weight : " />
                         <TextBox Width="50" />
                     </StackPanel>
+
+                    <Button
+                        Width="100"
+                        HorizontalAlignment="Right"
+                        Command="{Binding JsonOutputCommand}"
+                        Content="Json を出力" />
                 </StackPanel>
             </Grid>
 
