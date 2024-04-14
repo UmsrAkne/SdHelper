@@ -10,13 +10,14 @@ namespace SdHelper.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private string title = "Prism Application";
-        private FileInfo selectedFileInfo;
+        private FileInfoWrapper selectedFileInfo;
+        private string previewImagePath;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
-        public ObservableCollection<FileInfo> ModelFileInfos { get; set; } = new ();
+        public ObservableCollection<FileInfoWrapper> ModelFileInfos { get; set; } = new ();
 
-        public FileInfo SelectedFileInfo
+        public FileInfoWrapper SelectedFileInfo
         {
             get => selectedFileInfo;
             set
@@ -24,8 +25,20 @@ namespace SdHelper.ViewModels
                 if (SetProperty(ref selectedFileInfo, value))
                 {
                     RaisePropertyChanged(nameof(JsonOutputCommand));
+
+                    var exceptImagePath = value.GetFullNameWithoutExtension() + ".png";
+                    if (File.Exists(exceptImagePath))
+                    {
+                        PreviewImagePath = exceptImagePath;
+                    }
                 }
             }
+        }
+
+        public string PreviewImagePath
+        {
+            get => previewImagePath;
+            private set => SetProperty(ref previewImagePath, value);
         }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
@@ -35,11 +48,21 @@ namespace SdHelper.ViewModels
                 return;
             }
 
-            var weName = Path.GetFileNameWithoutExtension(SelectedFileInfo.FullName);
-            var directoryPath = SelectedFileInfo.DirectoryName;
-            ModelDetail.SerializeToJson($"{directoryPath}\\{weName}.json");
+            ModelDetail.SerializeToJson(SelectedFileInfo.GetFullNameWithoutExtension() + ".json");
         });
 
         private ModelDetail ModelDetail { get; set; } = new ();
+
+        public void ReplacePreviewImage(string imageFilePath)
+        {
+            if (SelectedFileInfo == null)
+            {
+                return;
+            }
+
+            var imageFile = new FileInfo(imageFilePath);
+            PreviewImagePath = imageFilePath;
+            File.Copy(imageFile.FullName, $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png");
+        }
     }
 }

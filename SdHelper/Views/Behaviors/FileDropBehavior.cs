@@ -1,6 +1,7 @@
 using System.IO;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
+using SdHelper.Models;
 using SdHelper.ViewModels;
 
 namespace SdHelper.Views.Behaviors
@@ -41,7 +42,18 @@ namespace SdHelper.Views.Behaviors
 
             foreach (var f in files)
             {
-                ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfo(f));
+                var fileInfo = new FileInfo(f);
+
+                switch (fileInfo.Extension)
+                {
+                    // ReSharper disable once StringLiteralTypo
+                    case ".safetensors":
+                        ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
+                        break;
+                    case ".png":
+                        ((MainWindowViewModel)window.DataContext).ReplacePreviewImage(fileInfo.FullName);
+                        return;
+                }
             }
         }
     }
