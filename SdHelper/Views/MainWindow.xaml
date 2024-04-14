@@ -13,15 +13,27 @@
     Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    Background="{StaticResource BasicBgBrush}"
     mc:Ignorable="d">
 
     <i:Interaction.Behaviors>
         <behaviors:FileDropBehavior />
     </i:Interaction.Behaviors>
 
-    <TabControl>
+    <TabControl Padding="1" BorderThickness="0">
         <TabItem Header="Model Helper">
-            <Grid>
+            <TabItem.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="#EEEEEE" />
+                </Style>
+
+                <Style TargetType="TextBox">
+                    <Setter Property="Foreground" Value="#EEEEEE" />
+                    <Setter Property="Background" Value="{StaticResource BasicBgBrush}" />
+                </Style>
+            </TabItem.Resources>
+
+            <Grid Background="{StaticResource BasicBgBrush}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition />
@@ -36,11 +48,12 @@
                     Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="0"
+                    Background="{StaticResource BasicBgBrush}"
                     ItemsSource="{Binding ModelFileInfos}"
                     SelectedItem="{Binding SelectedFileInfo}">
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
-                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -54,7 +67,7 @@
                 <StackPanel
                     Grid.Row="1"
                     Grid.Column="1"
-                    Margin="2">
+                    Margin="6,2">
                     <TextBlock Text="Prompt" />
                     <TextBox Height="50" />
 
