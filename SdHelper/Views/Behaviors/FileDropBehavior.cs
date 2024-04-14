@@ -1,6 +1,7 @@
 using System.IO;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
+using SdHelper.Models;
 using SdHelper.ViewModels;
 
 namespace SdHelper.Views.Behaviors
@@ -41,7 +42,7 @@ namespace SdHelper.Views.Behaviors
 
             foreach (var f in files)
             {
-                ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfo(f));
+                ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
             }
         }
     }

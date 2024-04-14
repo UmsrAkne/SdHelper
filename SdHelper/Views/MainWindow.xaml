@@ -5,8 +5,8 @@
     xmlns:behaviors="clr-namespace:SdHelper.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:io="clr-namespace:System.IO;assembly=System.Runtime"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
     Title="{Binding Title}"
@@ -39,7 +39,7 @@
                     ItemsSource="{Binding ModelFileInfos}"
                     SelectedItem="{Binding SelectedFileInfo}">
                     <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type io:FileInfo}">
+                        <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
                             <TextBlock Text="{Binding Name}" />
                         </DataTemplate>
                     </ListView.ItemTemplate>

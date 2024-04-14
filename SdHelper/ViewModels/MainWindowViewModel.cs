@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
 using Prism.Commands;
 using Prism.Mvvm;
 using SdHelper.Models;
@@ -10,13 +9,13 @@ namespace SdHelper.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         private string title = "Prism Application";
-        private FileInfo selectedFileInfo;
+        private FileInfoWrapper selectedFileInfo;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
-        public ObservableCollection<FileInfo> ModelFileInfos { get; set; } = new ();
+        public ObservableCollection<FileInfoWrapper> ModelFileInfos { get; set; } = new ();
 
-        public FileInfo SelectedFileInfo
+        public FileInfoWrapper SelectedFileInfo
         {
             get => selectedFileInfo;
             set
@@ -35,9 +34,7 @@ namespace SdHelper.ViewModels
                 return;
             }
 
-            var weName = Path.GetFileNameWithoutExtension(SelectedFileInfo.FullName);
-            var directoryPath = SelectedFileInfo.DirectoryName;
-            ModelDetail.SerializeToJson($"{directoryPath}\\{weName}.json");
+            ModelDetail.SerializeToJson(SelectedFileInfo.GetFullNameWithoutExtension() + ".json");
         });
 
         private ModelDetail ModelDetail { get; set; } = new ();
