@@ -1,5 +1,7 @@
+using System.IO;
 using System.Windows;
 using Microsoft.Xaml.Behaviors;
+using SdHelper.ViewModels;
 
 namespace SdHelper.Views.Behaviors
 {
@@ -20,9 +22,26 @@ namespace SdHelper.Views.Behaviors
 
         private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            var window = sender as Window;
+            if (window == null)
             {
-                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                return;
+            }
+
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                return;
+            }
+
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (files == null || files.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var f in files)
+            {
+                ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfo(f));
             }
         }
     }

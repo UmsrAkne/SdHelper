@@ -1,4 +1,6 @@
-﻿using Prism.Mvvm;
+﻿using System.Collections.ObjectModel;
+using System.IO;
+using Prism.Mvvm;
 
 namespace SdHelper.ViewModels
 {
@@ -8,5 +10,7 @@ namespace SdHelper.ViewModels
         private string title = "Prism Application";
 
         public string Title { get => title; set => SetProperty(ref title, value); }
+
+        public ObservableCollection<FileInfo> ModelFileInfos { get; set; } = new ();
     }
 }
