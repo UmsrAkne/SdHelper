@@ -62,7 +62,7 @@
                     Grid.Row="0"
                     Grid.Column="1"
                     Height="400"
-                    Source="{Binding PreviewImagePath}" />
+                    Source="{Binding PreviewImageSource}" />
 
                 <StackPanel
                     Grid.Row="1"
