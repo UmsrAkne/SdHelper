@@ -52,5 +52,17 @@ namespace SdHelper.ViewModels
         });
 
         private ModelDetail ModelDetail { get; set; } = new ();
+
+        public void ReplacePreviewImage(string imageFilePath)
+        {
+            if (SelectedFileInfo == null)
+            {
+                return;
+            }
+
+            var imageFile = new FileInfo(imageFilePath);
+            PreviewImagePath = imageFilePath;
+            File.Copy(imageFile.FullName, $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png");
+        }
     }
 }
