@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Prism.Commands;
@@ -41,8 +42,15 @@ namespace SdHelper.ViewModels
         public ImageSource PreviewImageSource
         {
             get => previewImageSource;
-            private set => SetProperty(ref previewImageSource, value);
+            private set
+            {
+                PreviewImageRect = new Rect(0, 0, value.Width, value.Height);
+                RaisePropertyChanged(nameof(PreviewImageRect));
+                SetProperty(ref previewImageSource, value);
+            }
         }
+
+        public Rect PreviewImageRect { get; set; }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {

@@ -68,6 +68,13 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="6,2">
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding PreviewImageRect.Width}" />
+                        <TextBlock Margin="5,0" Text="x" />
+                        <TextBlock Text="{Binding PreviewImageRect.Height}" />
+                    </StackPanel>
+
                     <TextBlock Text="Prompt" />
                     <TextBox Height="50" />
 
