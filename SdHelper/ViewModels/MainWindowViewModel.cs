@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
 using SdHelper.Models;
@@ -60,6 +63,37 @@ namespace SdHelper.ViewModels
             }
 
             ModelDetail.SerializeToJson(SelectedFileInfo.GetFullNameWithoutExtension() + ".json");
+        });
+
+        public DelegateCommand SaveModelUrlListCommand => new DelegateCommand(() =>
+        {
+            const string jsonFileName = "modelUrls.json";
+            var existingList = new List<string>();
+
+            if (File.Exists(jsonFileName))
+            {
+                var jsonFromFile = File.ReadAllText(jsonFileName);
+                existingList = JsonConvert.DeserializeObject<List<string>>(jsonFromFile);
+            }
+            
+            var urls = ModelFileInfos.Select(f => f.FileInfo.FullName);
+            urls = urls.Union(existingList);
+            var json = JsonConvert.SerializeObject(urls, Formatting.Indented);
+            File.WriteAllText(jsonFileName, json);
+        });
+
+        public DelegateCommand LoadModelUrlsListCommand => new DelegateCommand(() =>
+        {
+            const string jsonFileName = "modelUrls.json";
+            if (!File.Exists(jsonFileName))
+            {
+                return;
+            }
+
+            var jsonFromFile = File.ReadAllText(jsonFileName);
+            ModelFileInfos.AddRange(
+                JsonConvert.DeserializeObject<List<string>>(jsonFromFile)
+                    .Select(s => new FileInfoWrapper(new FileInfo(s))));
         });
 
         private ModelDetail ModelDetail { get; set; } = new ();
