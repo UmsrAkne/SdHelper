@@ -20,6 +20,16 @@
         <behaviors:FileDropBehavior />
     </i:Interaction.Behaviors>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding SaveModelUrlListCommand}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadModelUrlsListCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <TabControl Padding="1" BorderThickness="0">
         <TabItem Header="Model Helper">
             <TabItem.Resources>
