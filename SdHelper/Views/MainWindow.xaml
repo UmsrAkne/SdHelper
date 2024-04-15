@@ -61,8 +61,8 @@
                 <Image
                     Grid.Row="0"
                     Grid.Column="1"
-                    Height="400"
-                    Source="{Binding PreviewImageSource}" />
+                    Source="{Binding PreviewImageSource}"
+                    StretchDirection="DownOnly" />
 
                 <StackPanel
                     Grid.Row="1"
