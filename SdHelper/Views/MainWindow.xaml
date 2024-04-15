@@ -20,6 +20,16 @@
         <behaviors:FileDropBehavior />
     </i:Interaction.Behaviors>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding SaveModelUrlListCommand}" />
+        </i:EventTrigger>
+
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadModelUrlsListCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <TabControl Padding="1" BorderThickness="0">
         <TabItem Header="Model Helper">
             <TabItem.Resources>
@@ -61,13 +71,20 @@
                 <Image
                     Grid.Row="0"
                     Grid.Column="1"
-                    Height="400"
-                    Source="{Binding PreviewImageSource}" />
+                    Source="{Binding PreviewImageSource}"
+                    StretchDirection="DownOnly" />
 
                 <StackPanel
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="6,2">
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding PreviewImageRect.Width}" />
+                        <TextBlock Margin="5,0" Text="x" />
+                        <TextBlock Text="{Binding PreviewImageRect.Height}" />
+                    </StackPanel>
+
                     <TextBlock Text="Prompt" />
                     <TextBox Height="50" />
 
