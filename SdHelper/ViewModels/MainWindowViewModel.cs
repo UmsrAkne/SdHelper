@@ -55,6 +55,8 @@ namespace SdHelper.ViewModels
 
         public Rect PreviewImageRect { get; set; }
 
+        public ModelDetail ModelDetail { get; set; } = new ();
+
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
             if (SelectedFileInfo == null)
@@ -95,8 +97,6 @@ namespace SdHelper.ViewModels
                 JsonConvert.DeserializeObject<List<string>>(jsonFromFile)
                     .Select(s => new FileInfoWrapper(new FileInfo(s))));
         });
-
-        private ModelDetail ModelDetail { get; set; } = new ();
 
         public void ReplacePreviewImage(string imageFilePath)
         {
