@@ -16,10 +16,6 @@
     Background="{StaticResource BasicBgBrush}"
     mc:Ignorable="d">
 
-    <i:Interaction.Behaviors>
-        <behaviors:FileDropBehavior />
-    </i:Interaction.Behaviors>
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding SaveModelUrlListCommand}" />
@@ -61,6 +57,11 @@
                     Background="{StaticResource BasicBgBrush}"
                     ItemsSource="{Binding ModelFileInfos}"
                     SelectedItem="{Binding SelectedFileInfo}">
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:FileDropBehavior />
+                    </i:Interaction.Behaviors>
+
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
                             <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name}" />
