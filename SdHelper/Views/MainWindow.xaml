@@ -69,11 +69,19 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Image
+                <Border
                     Grid.Row="0"
                     Grid.Column="1"
-                    Source="{Binding PreviewImageSource}"
-                    StretchDirection="DownOnly" />
+                    Background="Transparent">
+                    <i:Interaction.Behaviors>
+                        <behaviors:PreviewImageDropBehavior />
+                    </i:Interaction.Behaviors>
+
+                    <Image
+                        MinHeight="300"
+                        Source="{Binding PreviewImageSource}"
+                        StretchDirection="DownOnly" />
+                </Border>
 
                 <StackPanel
                     Grid.Row="1"
