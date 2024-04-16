@@ -19,6 +19,7 @@ namespace SdHelper.ViewModels
         private string title = "Prism Application";
         private FileInfoWrapper selectedFileInfo;
         private ImageSource previewImageSource;
+        private FileInfo tempPreviewImageFileInfo;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
@@ -64,6 +65,12 @@ namespace SdHelper.ViewModels
 
         public ModelDetail ModelDetail { get; set; } = new ();
 
+        public FileInfo TempPreviewImageFileInfo
+        {
+            get => tempPreviewImageFileInfo;
+            set => SetProperty(ref tempPreviewImageFileInfo, value);
+        }
+
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
             if (SelectedFileInfo == null)
@@ -105,6 +112,18 @@ namespace SdHelper.ViewModels
                     .Select(s => new FileInfoWrapper(new FileInfo(s))));
         });
 
+        public DelegateCommand ConfirmPreviewImageChangeCommand => new DelegateCommand(() =>
+        {
+            if (SelectedFileInfo == null || TempPreviewImageFileInfo == null)
+            {
+                return;
+            }
+
+            var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
+            File.Copy(TempPreviewImageFileInfo.FullName, destPath);
+            TempPreviewImageFileInfo = null;
+        });
+        
         public void ReplacePreviewImage(string imageFilePath)
         {
             if (SelectedFileInfo == null)
@@ -113,9 +132,8 @@ namespace SdHelper.ViewModels
             }
 
             var imageFile = new FileInfo(imageFilePath);
-            var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
-            File.Copy(imageFile.FullName, destPath);
-            PreviewImageSource = new BitmapImage(new Uri(destPath));
+            TempPreviewImageFileInfo = new FileInfo(imageFile.FullName);
+            PreviewImageSource = new BitmapImage(new Uri(imageFile.FullName));
         }
     }
 }

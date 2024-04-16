@@ -88,6 +88,23 @@
                     Grid.Column="1"
                     Margin="6,2">
 
+                    <Button
+                        Margin="2"
+                        Padding="15,2"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ConfirmPreviewImageChangeCommand}"
+                        Content="Confirm Preview Image">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding TempPreviewImageFileInfo}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding PreviewImageRect.Width}" />
                         <TextBlock Margin="5,0" Text="x" />
