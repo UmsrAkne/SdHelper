@@ -20,6 +20,7 @@ namespace SdHelper.ViewModels
         private FileInfoWrapper selectedFileInfo;
         private ImageSource previewImageSource;
         private FileInfo tempPreviewImageFileInfo;
+        private bool waitForConfirm;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
@@ -70,6 +71,14 @@ namespace SdHelper.ViewModels
             get => tempPreviewImageFileInfo;
             set => SetProperty(ref tempPreviewImageFileInfo, value);
         }
+
+        /// <summary>
+        /// プレビュー画像の変更待ちを表すプロパティ
+        /// </summary>
+        /// <value>
+        /// プレビュー画像が変更が未確定の時に true それ以外の時は false
+        /// </value>
+        public bool WaitForConfirm { get => waitForConfirm; set => SetProperty(ref waitForConfirm, value); }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
@@ -122,6 +131,7 @@ namespace SdHelper.ViewModels
             var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
             File.Copy(TempPreviewImageFileInfo.FullName, destPath);
             TempPreviewImageFileInfo = null;
+            WaitForConfirm = false;
         });
         
         public void ReplacePreviewImage(string imageFilePath)
@@ -134,6 +144,7 @@ namespace SdHelper.ViewModels
             var imageFile = new FileInfo(imageFilePath);
             TempPreviewImageFileInfo = new FileInfo(imageFile.FullName);
             PreviewImageSource = new BitmapImage(new Uri(imageFile.FullName));
+            WaitForConfirm = true;
         }
     }
 }
