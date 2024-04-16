@@ -1,5 +1,6 @@
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
 using SdHelper.Models;
 using SdHelper.ViewModels;
@@ -23,8 +24,8 @@ namespace SdHelper.Views.Behaviors
 
         private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-            var window = sender as Window;
-            if (window == null)
+            var listView = sender as ListView;
+            if (listView == null)
             {
                 return;
             }
@@ -48,10 +49,10 @@ namespace SdHelper.Views.Behaviors
                 {
                     // ReSharper disable once StringLiteralTypo
                     case ".safetensors":
-                        ((MainWindowViewModel)window.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
+                        ((MainWindowViewModel)listView.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
                         break;
                     case ".png":
-                        ((MainWindowViewModel)window.DataContext).ReplacePreviewImage(fileInfo.FullName);
+                        ((MainWindowViewModel)listView.DataContext).ReplacePreviewImage(fileInfo.FullName);
                         return;
                 }
             }
