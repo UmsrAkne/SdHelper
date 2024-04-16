@@ -38,6 +38,13 @@ namespace SdHelper.ViewModels
                     {
                         PreviewImageSource = new BitmapImage(new Uri(exceptImagePath));
                     }
+
+                    var jsonPath = value.GetFullNameWithoutExtension() + ".json";
+                    ModelDetail = File.Exists(jsonPath)
+                        ? JsonConvert.DeserializeObject<ModelDetail>(File.ReadAllText(jsonPath))
+                        : new ModelDetail();
+
+                    RaisePropertyChanged(nameof(ModelDetail));
                 }
             }
         }
@@ -54,6 +61,8 @@ namespace SdHelper.ViewModels
         }
 
         public Rect PreviewImageRect { get; set; }
+
+        public ModelDetail ModelDetail { get; set; } = new ();
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
@@ -95,8 +104,6 @@ namespace SdHelper.ViewModels
                 JsonConvert.DeserializeObject<List<string>>(jsonFromFile)
                     .Select(s => new FileInfoWrapper(new FileInfo(s))));
         });
-
-        private ModelDetail ModelDetail { get; set; } = new ();
 
         public void ReplacePreviewImage(string imageFilePath)
         {

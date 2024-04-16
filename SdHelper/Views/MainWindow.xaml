@@ -86,23 +86,30 @@
                     </StackPanel>
 
                     <TextBlock Text="Prompt" />
-                    <TextBox Height="50" />
+                    <TextBox Height="50" Text="{Binding ModelDetail.Prompt, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Border Margin="0,2" />
 
                     <TextBlock Text="Negative Prompt" />
-                    <TextBox Height="50" />
+                    <TextBox Height="50" Text="{Binding ModelDetail.NegativePrompt, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Border Margin="0,2" />
 
                     <TextBlock Text="description" />
-                    <TextBox Height="40" />
+                    <TextBox Height="40" Text="{Binding ModelDetail.Description, UpdateSourceTrigger=PropertyChanged}" />
 
                     <StackPanel Margin="0,5" Orientation="Horizontal">
 
                         <TextBlock Text="weight : " />
-                        <TextBox Width="50" />
+                        <TextBox Width="50" Text="{Binding ModelDetail.Weight, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
+
+                    <Border Margin="0,2" />
+
+                    <TextBlock Text="note" />
+                    <TextBox Height="40" Text="{Binding ModelDetail.Note, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Border Margin="0,5" />
 
                     <Button
                         Width="100"
