@@ -47,7 +47,7 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <ListView
@@ -153,6 +153,7 @@
                         HorizontalAlignment="Right"
                         Command="{Binding JsonOutputCommand}"
                         Content="Json を出力" />
+
                 </StackPanel>
             </Grid>
 
