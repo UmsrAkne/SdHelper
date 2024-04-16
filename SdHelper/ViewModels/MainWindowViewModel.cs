@@ -38,6 +38,13 @@ namespace SdHelper.ViewModels
                     {
                         PreviewImageSource = new BitmapImage(new Uri(exceptImagePath));
                     }
+
+                    var jsonPath = value.GetFullNameWithoutExtension() + ".json";
+                    ModelDetail = File.Exists(jsonPath)
+                        ? JsonConvert.DeserializeObject<ModelDetail>(File.ReadAllText(jsonPath))
+                        : new ModelDetail();
+
+                    RaisePropertyChanged(nameof(ModelDetail));
                 }
             }
         }
