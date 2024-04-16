@@ -2,12 +2,11 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
-using SdHelper.Models;
 using SdHelper.ViewModels;
 
 namespace SdHelper.Views.Behaviors
 {
-    public class FileDropBehavior : Behavior<UIElement>
+    public class PreviewImageDropBehavior : Behavior<UIElement>
     {
         protected override void OnAttached()
         {
@@ -24,8 +23,7 @@ namespace SdHelper.Views.Behaviors
 
         private void AssociatedObject_Drop(object sender, DragEventArgs e)
         {
-            var listView = sender as ListView;
-            if (listView == null)
+            if (sender is not Border border)
             {
                 return;
             }
@@ -44,16 +42,10 @@ namespace SdHelper.Views.Behaviors
             foreach (var f in files)
             {
                 var fileInfo = new FileInfo(f);
-
-                switch (fileInfo.Extension)
+                if (fileInfo.Extension == ".png")
                 {
-                    // ReSharper disable once StringLiteralTypo
-                    case ".safetensors":
-                        ((MainWindowViewModel)listView.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
-                        break;
-                    case ".png":
-                        ((MainWindowViewModel)listView.DataContext).ReplacePreviewImage(fileInfo.FullName);
-                        return;
+                    ((MainWindowViewModel)border.DataContext).ReplacePreviewImage(fileInfo.FullName);
+                    return;
                 }
             }
         }

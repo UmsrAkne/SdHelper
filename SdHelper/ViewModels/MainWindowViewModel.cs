@@ -19,6 +19,8 @@ namespace SdHelper.ViewModels
         private string title = "Prism Application";
         private FileInfoWrapper selectedFileInfo;
         private ImageSource previewImageSource;
+        private FileInfo tempPreviewImageFileInfo;
+        private bool waitForConfirm;
 
         public string Title { get => title; set => SetProperty(ref title, value); }
 
@@ -34,10 +36,19 @@ namespace SdHelper.ViewModels
                     RaisePropertyChanged(nameof(JsonOutputCommand));
 
                     var exceptImagePath = value.GetFullNameWithoutExtension() + ".png";
-                    if (File.Exists(exceptImagePath))
-                    {
-                        PreviewImageSource = new BitmapImage(new Uri(exceptImagePath));
-                    }
+                    PreviewImageSource = File.Exists(exceptImagePath)
+                        ? new BitmapImage(new Uri(exceptImagePath))
+                        : null;
+
+                    var jsonPath = value.GetFullNameWithoutExtension() + ".json";
+                    ModelDetail = File.Exists(jsonPath)
+                        ? JsonConvert.DeserializeObject<ModelDetail>(File.ReadAllText(jsonPath))
+                        : new ModelDetail();
+
+                    RaisePropertyChanged(nameof(ModelDetail));
+
+                    WaitForConfirm = false;
+                    TempPreviewImageFileInfo = null;
                 }
             }
         }
@@ -47,13 +58,32 @@ namespace SdHelper.ViewModels
             get => previewImageSource;
             private set
             {
-                PreviewImageRect = new Rect(0, 0, value.Width, value.Height);
+                PreviewImageRect = value == null
+                    ? new Rect(0, 0, 0, 0)
+                    : new Rect(0, 0, value.Width, value.Height);
+
                 RaisePropertyChanged(nameof(PreviewImageRect));
                 SetProperty(ref previewImageSource, value);
             }
         }
 
         public Rect PreviewImageRect { get; set; }
+
+        public ModelDetail ModelDetail { get; set; } = new ();
+
+        public FileInfo TempPreviewImageFileInfo
+        {
+            get => tempPreviewImageFileInfo;
+            set => SetProperty(ref tempPreviewImageFileInfo, value);
+        }
+
+        /// <summary>
+        /// プレビュー画像の変更待ちを表すプロパティ
+        /// </summary>
+        /// <value>
+        /// プレビュー画像が変更が未確定の時に true それ以外の時は false
+        /// </value>
+        public bool WaitForConfirm { get => waitForConfirm; set => SetProperty(ref waitForConfirm, value); }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
@@ -96,8 +126,19 @@ namespace SdHelper.ViewModels
                     .Select(s => new FileInfoWrapper(new FileInfo(s))));
         });
 
-        private ModelDetail ModelDetail { get; set; } = new ();
+        public DelegateCommand ConfirmPreviewImageChangeCommand => new DelegateCommand(() =>
+        {
+            if (SelectedFileInfo == null || TempPreviewImageFileInfo == null)
+            {
+                return;
+            }
 
+            var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
+            File.Copy(TempPreviewImageFileInfo.FullName, destPath);
+            TempPreviewImageFileInfo = null;
+            WaitForConfirm = false;
+        });
+        
         public void ReplacePreviewImage(string imageFilePath)
         {
             if (SelectedFileInfo == null)
@@ -106,9 +147,9 @@ namespace SdHelper.ViewModels
             }
 
             var imageFile = new FileInfo(imageFilePath);
-            var destPath = $"{SelectedFileInfo.GetFullNameWithoutExtension()}.png";
-            File.Copy(imageFile.FullName, destPath);
-            PreviewImageSource = new BitmapImage(new Uri(destPath));
+            TempPreviewImageFileInfo = new FileInfo(imageFile.FullName);
+            PreviewImageSource = new BitmapImage(new Uri(imageFile.FullName));
+            WaitForConfirm = true;
         }
     }
 }

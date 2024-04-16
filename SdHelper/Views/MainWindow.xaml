@@ -16,10 +16,6 @@
     Background="{StaticResource BasicBgBrush}"
     mc:Ignorable="d">
 
-    <i:Interaction.Behaviors>
-        <behaviors:FileDropBehavior />
-    </i:Interaction.Behaviors>
-
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding SaveModelUrlListCommand}" />
@@ -51,7 +47,7 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <ListView
@@ -61,6 +57,11 @@
                     Background="{StaticResource BasicBgBrush}"
                     ItemsSource="{Binding ModelFileInfos}"
                     SelectedItem="{Binding SelectedFileInfo}">
+
+                    <i:Interaction.Behaviors>
+                        <behaviors:FileDropBehavior />
+                    </i:Interaction.Behaviors>
+
                     <ListView.ItemTemplate>
                         <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
                             <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name}" />
@@ -68,16 +69,52 @@
                     </ListView.ItemTemplate>
                 </ListView>
 
-                <Image
+                <Border
                     Grid.Row="0"
                     Grid.Column="1"
-                    Source="{Binding PreviewImageSource}"
-                    StretchDirection="DownOnly" />
+                    Background="Transparent">
+                    <i:Interaction.Behaviors>
+                        <behaviors:PreviewImageDropBehavior />
+                    </i:Interaction.Behaviors>
+
+                    <Image
+                        MinHeight="300"
+                        Source="{Binding PreviewImageSource}"
+                        StretchDirection="DownOnly">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding WaitForConfirm}" Value="True">
+                                        <Setter Property="Opacity" Value="0.3" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+
+                    </Image>
+                </Border>
 
                 <StackPanel
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="6,2">
+
+                    <Button
+                        Margin="2"
+                        Padding="15,2"
+                        HorizontalAlignment="Center"
+                        Command="{Binding ConfirmPreviewImageChangeCommand}"
+                        Content="Confirm Preview Image">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding TempPreviewImageFileInfo}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
 
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding PreviewImageRect.Width}" />
@@ -86,29 +123,37 @@
                     </StackPanel>
 
                     <TextBlock Text="Prompt" />
-                    <TextBox Height="50" />
+                    <TextBox Height="50" Text="{Binding ModelDetail.Prompt, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Border Margin="0,2" />
 
                     <TextBlock Text="Negative Prompt" />
-                    <TextBox Height="50" />
+                    <TextBox Height="50" Text="{Binding ModelDetail.NegativePrompt, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Border Margin="0,2" />
 
                     <TextBlock Text="description" />
-                    <TextBox Height="40" />
+                    <TextBox Height="40" Text="{Binding ModelDetail.Description, UpdateSourceTrigger=PropertyChanged}" />
 
                     <StackPanel Margin="0,5" Orientation="Horizontal">
 
                         <TextBlock Text="weight : " />
-                        <TextBox Width="50" />
+                        <TextBox Width="50" Text="{Binding ModelDetail.Weight, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
+
+                    <Border Margin="0,2" />
+
+                    <TextBlock Text="note" />
+                    <TextBox Height="40" Text="{Binding ModelDetail.Note, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Border Margin="0,5" />
 
                     <Button
                         Width="100"
                         HorizontalAlignment="Right"
                         Command="{Binding JsonOutputCommand}"
                         Content="Json を出力" />
+
                 </StackPanel>
             </Grid>
 
