@@ -36,10 +36,9 @@ namespace SdHelper.ViewModels
                     RaisePropertyChanged(nameof(JsonOutputCommand));
 
                     var exceptImagePath = value.GetFullNameWithoutExtension() + ".png";
-                    if (File.Exists(exceptImagePath))
-                    {
-                        PreviewImageSource = new BitmapImage(new Uri(exceptImagePath));
-                    }
+                    PreviewImageSource = File.Exists(exceptImagePath)
+                        ? new BitmapImage(new Uri(exceptImagePath))
+                        : null;
 
                     var jsonPath = value.GetFullNameWithoutExtension() + ".json";
                     ModelDetail = File.Exists(jsonPath)
@@ -47,6 +46,9 @@ namespace SdHelper.ViewModels
                         : new ModelDetail();
 
                     RaisePropertyChanged(nameof(ModelDetail));
+
+                    WaitForConfirm = false;
+                    TempPreviewImageFileInfo = null;
                 }
             }
         }
@@ -56,7 +58,10 @@ namespace SdHelper.ViewModels
             get => previewImageSource;
             private set
             {
-                PreviewImageRect = new Rect(0, 0, value.Width, value.Height);
+                PreviewImageRect = value == null
+                    ? new Rect(0, 0, 0, 0)
+                    : new Rect(0, 0, value.Width, value.Height);
+
                 RaisePropertyChanged(nameof(PreviewImageRect));
                 SetProperty(ref previewImageSource, value);
             }
