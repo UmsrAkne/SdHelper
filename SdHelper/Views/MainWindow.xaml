@@ -9,6 +9,7 @@
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
+    xmlns:views="clr-namespace:SdHelper.Views"
     Title="{Binding Title}"
     Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
@@ -27,6 +28,14 @@
     </i:Interaction.Triggers>
 
     <TabControl Padding="1" BorderThickness="0">
+        <TabItem Header="Model Helper">
+            <Frame>
+                <Frame.Content>
+                    <views:ModelViewPage DataContext="{Binding ModelViewPageViewModel}" />
+                </Frame.Content>
+            </Frame>
+        </TabItem>
+
         <TabItem Header="Model Helper">
             <TabItem.Resources>
                 <Style TargetType="TextBlock">

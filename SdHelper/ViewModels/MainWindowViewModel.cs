@@ -22,6 +22,13 @@ namespace SdHelper.ViewModels
         private FileInfo tempPreviewImageFileInfo;
         private bool waitForConfirm;
 
+        public MainWindowViewModel(ModelViewPageViewModel modelViewPageVm)
+        {
+            ModelViewPageViewModel = modelViewPageVm;
+        }
+
+        public ModelViewPageViewModel ModelViewPageViewModel { get; set; }
+
         public string Title { get => title; set => SetProperty(ref title, value); }
 
         public ObservableCollection<FileInfoWrapper> ModelFileInfos { get; set; } = new ();
