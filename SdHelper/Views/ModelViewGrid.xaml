@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
-    d:DataContext="{d:DesignInstance viewModels:ModelViewPageViewModel}"
+    d:DataContext="{d:DesignInstance viewModels:ModelViewGridViewModel}"
     mc:Ignorable="d">
 
     <Grid>

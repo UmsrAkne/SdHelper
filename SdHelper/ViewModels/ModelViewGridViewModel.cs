@@ -14,7 +14,7 @@ using SdHelper.Models;
 namespace SdHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class ModelViewPageViewModel : BindableBase
+    public class ModelViewGridViewModel : BindableBase
     {
         private FileInfoWrapper selectedFileInfo;
         private ImageSource previewImageSource;

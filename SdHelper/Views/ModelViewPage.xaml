@@ -9,7 +9,7 @@
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
     Title="ModelViewPage"
-    d:DataContext="{d:DesignInstance viewModels:ModelViewPageViewModel}"
+    d:DataContext="{d:DesignInstance viewModels:ModelViewGridViewModel}"
     mc:Ignorable="d">
 
     <Page.Resources>
