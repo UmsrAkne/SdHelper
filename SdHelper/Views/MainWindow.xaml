@@ -27,11 +27,7 @@
 
     <TabControl Padding="1" BorderThickness="0">
         <TabItem Header="Model Helper">
-            <Frame>
-                <Frame.Content>
-                    <views:ModelViewPage DataContext="{Binding ModelViewPageViewModel}" />
-                </Frame.Content>
-            </Frame>
+            <views:ModelViewGrid DataContext="{Binding ModelViewPageViewModel}" />
         </TabItem>
     </TabControl>
 </Window>

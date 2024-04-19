@@ -49,10 +49,10 @@ namespace SdHelper.Views.Behaviors
                 {
                     // ReSharper disable once StringLiteralTypo
                     case ".safetensors":
-                        ((MainWindowViewModel)listView.DataContext).ModelViewPageViewModel.ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
+                        ((ModelViewPageViewModel)listView.DataContext).ModelFileInfos.Add(new FileInfoWrapper(new FileInfo(f)));
                         break;
                     case ".png":
-                        ((MainWindowViewModel)listView.DataContext).ModelViewPageViewModel.ReplacePreviewImage(fileInfo.FullName);
+                        ((ModelViewPageViewModel)listView.DataContext).ReplacePreviewImage(fileInfo.FullName);
                         return;
                 }
             }
