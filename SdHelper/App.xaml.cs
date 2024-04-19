@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Prism.Ioc;
+using SdHelper.ViewModels;
 using SdHelper.Views;
 
 namespace SdHelper
@@ -16,6 +17,8 @@ namespace SdHelper
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<ModelViewGridViewModel>();
+            containerRegistry.Register<ImageViewGridViewModel>();
         }
     }
 }
