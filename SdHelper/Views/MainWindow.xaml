@@ -29,5 +29,9 @@
         <TabItem Header="Model Helper">
             <views:ModelViewGrid DataContext="{Binding ModelViewGridViewModel}" />
         </TabItem>
+
+        <TabItem Header="Image View">
+            <views:ImageViewGrid DataContext="{Binding ImageViewGridViewModel}" />
+        </TabItem>
     </TabControl>
 </Window>
