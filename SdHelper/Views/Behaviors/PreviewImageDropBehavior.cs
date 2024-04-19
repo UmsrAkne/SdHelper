@@ -44,7 +44,7 @@ namespace SdHelper.Views.Behaviors
                 var fileInfo = new FileInfo(f);
                 if (fileInfo.Extension == ".png")
                 {
-                    ((MainWindowViewModel)border.DataContext).ModelViewGridViewModel.ReplacePreviewImage(fileInfo.FullName);
+                    ((ModelViewGridViewModel)border.DataContext).ReplacePreviewImage(fileInfo.FullName);
                     return;
                 }
             }
