@@ -17,7 +17,7 @@ namespace SdHelper
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<ModelViewPageViewModel>();
+            containerRegistry.Register<ModelViewGridViewModel>();
         }
     }
 }

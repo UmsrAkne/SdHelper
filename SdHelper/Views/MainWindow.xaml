@@ -17,21 +17,17 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ModelViewPageViewModel.SaveModelUrlListCommand}" />
+            <i:InvokeCommandAction Command="{Binding ModelViewGridViewModel.SaveModelUrlListCommand}" />
         </i:EventTrigger>
 
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding ModelViewPageViewModel.LoadModelUrlsListCommand}" />
+            <i:InvokeCommandAction Command="{Binding ModelViewGridViewModel.LoadModelUrlsListCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
     <TabControl Padding="1" BorderThickness="0">
         <TabItem Header="Model Helper">
-            <Frame>
-                <Frame.Content>
-                    <views:ModelViewPage DataContext="{Binding ModelViewPageViewModel}" />
-                </Frame.Content>
-            </Frame>
+            <views:ModelViewGrid DataContext="{Binding ModelViewGridViewModel}" />
         </TabItem>
     </TabControl>
 </Window>

@@ -7,12 +7,12 @@ namespace SdHelper.ViewModels
     {
         private string title = "Prism Application";
 
-        public MainWindowViewModel(ModelViewPageViewModel modelViewPageVm)
+        public MainWindowViewModel(ModelViewGridViewModel modelViewGridVm)
         {
-            ModelViewPageViewModel = modelViewPageVm;
+            ModelViewGridViewModel = modelViewGridVm;
         }
 
-        public ModelViewPageViewModel ModelViewPageViewModel { get; set; }
+        public ModelViewGridViewModel ModelViewGridViewModel { get; set; }
 
         public string Title { get => title; set => SetProperty(ref title, value); }
     }
