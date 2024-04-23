@@ -13,6 +13,7 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+
     <Grid Background="{StaticResource BasicBgBrush}">
         <Grid.Resources>
             <Style TargetType="TextBlock">

@@ -22,6 +22,7 @@
 
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ModelViewGridViewModel.LoadModelUrlsListCommand}" />
+            <i:InvokeCommandAction Command="{Binding ImageViewGridViewModel.LoadExistingImagePathsCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

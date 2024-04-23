@@ -1,4 +1,9 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+using Prism.Commands;
 using Prism.Mvvm;
 using SdHelper.Models;
 
@@ -16,5 +21,16 @@ namespace SdHelper.ViewModels
             get => selectedImageFile;
             set => SetProperty(ref selectedImageFile, value);
         }
+
+        public DelegateCommand LoadExistingImagePathsCommand => new DelegateCommand(() =>
+        {
+            var jsonFileName = "imagePaths.json";
+            ImageFiles.AddRange(
+                File.Exists(jsonFileName)
+                ? JsonConvert.DeserializeObject<IEnumerable<string>>(File.ReadAllText(jsonFileName))
+                    .Select(p => new FileInfoWrapper(new FileInfo(p)))
+                    .ToList()
+                : new List<FileInfoWrapper>());
+        });
     }
 }
