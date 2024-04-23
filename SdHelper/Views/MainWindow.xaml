@@ -22,10 +22,14 @@
 
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ModelViewGridViewModel.LoadModelUrlsListCommand}" />
+            <i:InvokeCommandAction Command="{Binding ImageViewGridViewModel.LoadExistingImagePathsCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <TabControl Padding="1" BorderThickness="0">
+    <TabControl
+        Padding="1"
+        BorderThickness="0"
+        SelectedIndex="{Binding TabIndex}">
         <TabItem Header="Model Helper">
             <views:ModelViewGrid DataContext="{Binding ModelViewGridViewModel}" />
         </TabItem>

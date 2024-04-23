@@ -2,12 +2,18 @@
     x:Class="SdHelper.Views.ImageViewGrid"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:SdHelper.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:SdHelper.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SdHelper.Models"
+    xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:ImageViewGridViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+
     <Grid Background="{StaticResource BasicBgBrush}">
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -29,14 +35,38 @@
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
-            Background="{StaticResource BasicBgBrush}" />
+            Background="{StaticResource BasicBgBrush}"
+            ItemsSource="{Binding ImageFiles}"
+            SelectedItem="{Binding SelectedImageFile}">
+            <i:Interaction.Behaviors>
+                <behaviors:ImageFileDropBehavior />
+            </i:Interaction.Behaviors>
 
-        <Border Grid.Row="0" Grid.Column="1" />
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
+                    <Border>
+                        <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name}" />
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
+
+        <Border Grid.Row="0" Grid.Column="1">
+            <Image Source="{Binding SelectedImageFile.FileInfo.FullName}" />
+        </Border>
 
         <StackPanel
             Grid.Row="1"
             Grid.Column="1"
             Margin="2">
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="{Binding SelectedImageFile.Width}" />
+                <TextBlock Margin="5,0" Text="x" />
+                <TextBlock Text="{Binding SelectedImageFile.Height}" />
+            </StackPanel>
+
             <TextBlock Text="Prompt" />
             <Border
                 BorderBrush="{StaticResource BasicFgBrush}"
