@@ -7,6 +7,7 @@
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:SdHelper.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:ImageViewGridViewModel}"
     d:DesignHeight="300"
@@ -38,6 +39,14 @@
             <i:Interaction.Behaviors>
                 <behaviors:ImageFileDropBehavior />
             </i:Interaction.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:FileInfoWrapper}">
+                    <Border>
+                        <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name}" />
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
         </ListView>
 
