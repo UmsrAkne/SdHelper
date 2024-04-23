@@ -59,6 +59,13 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="2">
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="{Binding SelectedImageFile.Width}" />
+                <TextBlock Margin="5,0" Text="x" />
+                <TextBlock Text="{Binding SelectedImageFile.Height}" />
+            </StackPanel>
+
             <TextBlock Text="Prompt" />
             <Border
                 BorderBrush="{StaticResource BasicFgBrush}"
