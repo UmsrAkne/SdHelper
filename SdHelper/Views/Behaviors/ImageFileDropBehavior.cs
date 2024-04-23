@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Xaml.Behaviors;
+using Newtonsoft.Json;
 using SdHelper.Models;
 using SdHelper.ViewModels;
 
@@ -45,16 +48,30 @@ namespace SdHelper.Views.Behaviors
                 return;
             }
 
-            foreach (var f in files)
-            {
-                var fileInfo = new FileInfo(f);
-                if (fileInfo.Extension != ".png")
-                {
-                    continue;
-                }
+            var fileInfos = files
+                .Select(f => new FileInfo(f))
+                .Where(f => f.Extension == ".png")
+                .ToList();
 
-                ((ImageViewGridViewModel)listView.DataContext).ImageFiles.Add(new FileInfoWrapper(new FileInfo(f)));
+            foreach (var f in fileInfos)
+            {
+                ((ImageViewGridViewModel)listView.DataContext).ImageFiles.Add(new FileInfoWrapper(f));
             }
+
+            var jsonFileName = "imagePaths.json";
+
+            // このメソッド内で取得したパスのリスト
+            var paths = fileInfos.Select(f => f.FullName);
+
+            // json ファイルに存在する既存のパスリスト。三項演算子でファイルがない場合は空になる
+            var existingPaths = File.Exists(jsonFileName)
+                ? JsonConvert.DeserializeObject<IEnumerable<string>>(File.ReadAllText(jsonFileName)).ToList()
+                : new List<string>();
+
+            paths = paths.Except(existingPaths).Concat(existingPaths); // ２つのリストの重複を削除する
+
+            var jsonString = JsonConvert.SerializeObject(paths, Formatting.Indented);
+            File.WriteAllText(jsonFileName, jsonString);
         }
     }
 }
