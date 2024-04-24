@@ -25,14 +25,13 @@ namespace SdHelper.Models
                         return;
                     }
 
-                    MetaData = new ModelDetail();
                     var m = (BitmapMetadata)frame.Metadata;
 
                     foreach (var query in m)
                     {
                         if (query.StartsWith("/tEXt"))
                         {
-                            MetaData.Prompt = m.GetQuery("/tEXt/{str=parameters}") as string;
+                            MetaData = new ImageDetail(m.GetQuery("/tEXt/{str=parameters}") as string);
                         }
                     }
                 }
@@ -53,7 +52,7 @@ namespace SdHelper.Models
 
         public int Height { get; set; }
 
-        public ModelDetail MetaData { get; private set; }
+        public ImageDetail MetaData { get; private set; }
 
         /// <summary>
         /// このオブジェクトが保持している FileInfo の、拡張子を除いたフルパスを取得します。
