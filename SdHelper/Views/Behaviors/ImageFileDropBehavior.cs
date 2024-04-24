@@ -53,10 +53,7 @@ namespace SdHelper.Views.Behaviors
                 .Where(f => f.Extension == ".png")
                 .ToList();
 
-            foreach (var f in fileInfos)
-            {
-                ((ImageViewGridViewModel)listView.DataContext).ImageFiles.Add(new FileInfoWrapper(f));
-            }
+            ((ImageViewGridViewModel)listView.DataContext).AddImageFiles(fileInfos.Select(f => new FileInfoWrapper(f)));
 
             var jsonFileName = "imagePaths.json";
 
