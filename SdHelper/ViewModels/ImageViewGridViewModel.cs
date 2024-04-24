@@ -32,5 +32,13 @@ namespace SdHelper.ViewModels
                     .ToList()
                 : new List<FileInfoWrapper>());
         });
+
+        public void AddImageFiles(IEnumerable<FileInfoWrapper> images)
+        {
+            images = images.Except(ImageFiles, new FileInfoWrapperEqualityComparer());
+
+            ImageFiles.AddRange(images);
+            ImageFiles = new ObservableCollection<FileInfoWrapper>(ImageFiles.OrderByDescending(f => f.FileInfo.FullName));
+        }
     }
 }
