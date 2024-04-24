@@ -17,6 +17,23 @@ namespace SdHelper.Models
                     var bitmap = new BitmapImage(new Uri(f.FullName));
                     Width = bitmap.PixelWidth;
                     Height = bitmap.PixelHeight;
+
+                    var frame = BitmapFrame.Create(new Uri(f.FullName));
+
+                    if (frame.Metadata == null)
+                    {
+                        return;
+                    }
+
+                    var m = (BitmapMetadata)frame.Metadata;
+
+                    foreach (var query in m)
+                    {
+                        if (query.StartsWith("/tEXt"))
+                        {
+                            MetaData = new ImageDetail(m.GetQuery("/tEXt/{str=parameters}") as string);
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -34,6 +51,8 @@ namespace SdHelper.Models
         public int Width { get; set; }
 
         public int Height { get; set; }
+
+        public ImageDetail MetaData { get; private set; }
 
         /// <summary>
         /// このオブジェクトが保持している FileInfo の、拡張子を除いたフルパスを取得します。
