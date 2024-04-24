@@ -18,6 +18,8 @@
         <Grid.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="Foreground" Value="#EEEEEE" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Padding" Value="2" />
             </Style>
         </Grid.Resources>
 
@@ -73,7 +75,7 @@
                 BorderThickness="1"
                 CornerRadius="2">
 
-                <TextBlock />
+                <TextBlock Text="{Binding SelectedImageFile.MetaData.Prompt}" />
             </Border>
             <Border Margin="0,2" />
 
@@ -84,8 +86,20 @@
                 BorderThickness="1"
                 CornerRadius="2">
 
-                <TextBlock />
+                <TextBlock Text="{Binding SelectedImageFile.MetaData.NegativePrompt}" />
             </Border>
+
+            <Border Margin="0,2" />
+            <TextBlock Text="Seed" />
+
+            <Border
+                BorderBrush="{StaticResource BasicFgBrush}"
+                BorderThickness="1"
+                CornerRadius="2">
+
+                <TextBlock Text="{Binding SelectedImageFile.MetaData.Seed}" />
+            </Border>
+
             <Border Margin="0,2" />
         </StackPanel>
     </Grid>
