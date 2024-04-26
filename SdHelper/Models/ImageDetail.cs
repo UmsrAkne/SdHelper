@@ -1,4 +1,3 @@
-using System;
 using System.Text.RegularExpressions;
 using Prism.Mvvm;
 
@@ -42,9 +41,9 @@ namespace SdHelper.Models
 
         public uint Seed { get; set; }
 
-        public int Width { get; set; }
+        public int Width { get; init; }
 
-        public int Height { get; set; }
+        public int Height { get; init; }
 
         public Rate Rate { get => rate; set => SetProperty(ref rate, value); }
     }
