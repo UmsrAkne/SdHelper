@@ -5,7 +5,6 @@
     xmlns:behaviors="clr-namespace:SdHelper.Views.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:SdHelper.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
