@@ -29,10 +29,18 @@ namespace SdHelper.Models
                 : 0;
         }
 
+        public ImageDetail()
+        {
+        }
+
         public string Prompt { get; set; }
 
         public string NegativePrompt { get; set; }
 
         public uint Seed { get; set; }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
     }
 }
