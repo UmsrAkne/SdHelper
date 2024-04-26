@@ -1,10 +1,12 @@
-using System;
 using System.Text.RegularExpressions;
+using Prism.Mvvm;
 
 namespace SdHelper.Models
 {
-    public class ImageDetail
+    public class ImageDetail : BindableBase
     {
+        private Rate rate = Rate.None;
+
         /// <summary>
         /// 画像ファイルに埋め込まれたメタデータのテキストから読み取れる情報を各プロパティにセットします
         /// </summary>
@@ -29,10 +31,20 @@ namespace SdHelper.Models
                 : 0;
         }
 
+        public ImageDetail()
+        {
+        }
+
         public string Prompt { get; set; }
 
         public string NegativePrompt { get; set; }
 
         public uint Seed { get; set; }
+
+        public int Width { get; init; }
+
+        public int Height { get; init; }
+
+        public Rate Rate { get => rate; set => SetProperty(ref rate, value); }
     }
 }
