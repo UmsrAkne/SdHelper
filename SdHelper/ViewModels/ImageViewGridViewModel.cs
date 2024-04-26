@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -31,6 +32,22 @@ namespace SdHelper.ViewModels
                     .Select(p => new FileInfoWrapper(new FileInfo(p)))
                     .ToList()
                 : new List<FileInfoWrapper>());
+        });
+
+        public DelegateCommand<object> RatingCommand => new DelegateCommand<object>((param) =>
+        {
+            if (SelectedImageFile == null)
+            {
+                return;
+            }
+
+            if (int.TryParse(param.ToString(), out var n))
+            {
+                if (Enum.IsDefined(typeof(Rate), n))
+                {
+                    SelectedImageFile.MetaData.Rate = (Rate)n;
+                }
+            }
         });
 
         public void AddImageFiles(IEnumerable<FileInfoWrapper> images)
