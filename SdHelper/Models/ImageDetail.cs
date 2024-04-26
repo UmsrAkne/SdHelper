@@ -38,5 +38,9 @@ namespace SdHelper.Models
         public string NegativePrompt { get; set; }
 
         public uint Seed { get; set; }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
     }
 }

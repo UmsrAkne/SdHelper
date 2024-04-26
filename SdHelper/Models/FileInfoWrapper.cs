@@ -19,10 +19,6 @@ namespace SdHelper.Models
 
         public string Name => FileInfo.Name;
 
-        public int Width { get; set; }
-
-        public int Height { get; set; }
-
         public ImageDetail MetaData
         {
             get
@@ -36,15 +32,11 @@ namespace SdHelper.Models
                 {
                     try
                     {
-                        var bitmap = new BitmapImage(new Uri(FileInfo.FullName));
-                        Width = bitmap.PixelWidth;
-                        Height = bitmap.PixelHeight;
-
                         var frame = BitmapFrame.Create(new Uri(FileInfo.FullName));
 
                         if (frame.Metadata == null)
                         {
-                            metaData = new ImageDetail();
+                            metaData = new ImageDetail() { Width = frame.PixelWidth, Height = frame.PixelHeight, };
                             return metaData;
                         }
 
@@ -52,7 +44,9 @@ namespace SdHelper.Models
 
                         if (m.Any(query => query.StartsWith("/tEXt")))
                         {
-                            metaData = new ImageDetail(m.GetQuery("/tEXt/{str=parameters}") as string);
+                            metaData = new ImageDetail(m.GetQuery("/tEXt/{str=parameters}") as string)
+                                { Width = frame.PixelWidth, Height = frame.PixelHeight, };
+
                             return metaData;
                         }
                     }

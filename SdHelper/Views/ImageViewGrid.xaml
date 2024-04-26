@@ -64,9 +64,9 @@
             Margin="2">
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                <TextBlock Text="{Binding SelectedImageFile.Width}" />
+                <TextBlock Text="{Binding SelectedImageFile.MetaData.Width}" />
                 <TextBlock Margin="5,0" Text="x" />
-                <TextBlock Text="{Binding SelectedImageFile.Height}" />
+                <TextBlock Text="{Binding SelectedImageFile.MetaData.Height}" />
             </StackPanel>
 
             <TextBlock Text="Prompt" />
