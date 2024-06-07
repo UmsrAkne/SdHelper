@@ -1,20 +1,22 @@
 ﻿using System.Diagnostics;
 using Prism.Mvvm;
+using SdHelper.Models;
 
 namespace SdHelper.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     public class MainWindowViewModel : BindableBase
     {
-        private string title = "Prism Application";
         private int tabIndex;
 
         public MainWindowViewModel(ModelViewGridViewModel modelViewGridVm, ImageViewGridViewModel imageViewGridVm)
         {
+            TitleBarText.Text = "Sd Helper";
             ModelViewGridViewModel = modelViewGridVm;
             ImageViewGridViewModel = imageViewGridVm;
 
             ChangeSelectedTabIndex(1); // デバッグビルド のときだけ実行されるメソッド
+            SetVersion();
         }
 
         public ModelViewGridViewModel ModelViewGridViewModel { get; set; }
@@ -23,12 +25,18 @@ namespace SdHelper.ViewModels
 
         public int TabIndex { get => tabIndex; set => SetProperty(ref tabIndex, value); }
 
-        public string Title { get => title; set => SetProperty(ref title, value); }
+        public TitleBarText TitleBarText { get; init; } = new TitleBarText();
 
         [Conditional("DEBUG")]
         private void ChangeSelectedTabIndex(int index)
         {
             TabIndex = index;
+        }
+
+        [Conditional("RELEASE")]
+        private void SetVersion()
+        {
+            TitleBarText.Version = "version " + "20240607" + "a";
         }
     }
 }
