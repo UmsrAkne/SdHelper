@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using Prism.Ioc;
+using SdHelper.Models;
 using SdHelper.ViewModels;
 using SdHelper.Views;
 
@@ -19,6 +20,12 @@ namespace SdHelper
         {
             containerRegistry.Register<ModelViewGridViewModel>();
             containerRegistry.Register<ImageViewGridViewModel>();
+
+            #if DEBUG
+            containerRegistry.Register<IImageFileProvider, DummyImageProvider>();
+            #else
+            containerRegistry.Register<IImageFIleProvider, ImageFileProvider>();
+            #endif
         }
     }
 }
