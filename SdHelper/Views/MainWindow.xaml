@@ -8,7 +8,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
     xmlns:views="clr-namespace:SdHelper.Views"
-    Title="{Binding Title}"
+    Title="{Binding TitleBarText.Text}"
     Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"

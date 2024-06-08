@@ -23,13 +23,14 @@
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ListView
@@ -110,13 +111,21 @@
 
         </ListView>
 
-        <Border Grid.Row="0" Grid.Column="1">
+        <GridSplitter
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Width="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch" />
+
+        <Border Grid.Row="0" Grid.Column="2">
             <Image Source="{Binding SelectedImageFile.FileInfo.FullName}" />
         </Border>
 
         <StackPanel
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Margin="2">
 
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">

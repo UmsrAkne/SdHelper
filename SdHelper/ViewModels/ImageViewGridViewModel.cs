@@ -14,8 +14,34 @@ namespace SdHelper.ViewModels
     public class ImageViewGridViewModel : BindableBase
     {
         private FileInfoWrapper selectedImageFile;
+        private int selectedImageIndex;
 
-        public ObservableCollection<FileInfoWrapper> ImageFiles { get; private set; } = new ();
+        /// <summary>
+        /// デザイン画面でのプレビュー生成時に呼び出されるコンストラクタ。
+        /// ダミーのデータをビューモデルにセットします。
+        /// 実際のアプリの実行時には呼び出されません。
+        /// </summary>
+        public ImageViewGridViewModel()
+            : this(new DummyImageProvider())
+        {
+        }
+
+        /// <summary>
+        /// DI コンテナから IImageFileProvider を受け取るコンストラクタ。
+        /// </summary>
+        /// <param name="imageProvider">イメージファイルのリストを提供するインスタンス</param>
+        // ReSharper disable once MemberCanBePrivate.Global
+        // DI コンテナから呼び出されるため、 private にはできない。
+        public ImageViewGridViewModel(IImageFileProvider imageProvider)
+        {
+            ImageFiles = imageProvider.ImageFiles;
+            if (ImageFiles.Count > 0)
+            {
+                SelectedImageFile = ImageFiles[0];
+            }
+        }
+
+        public ObservableCollection<FileInfoWrapper> ImageFiles { get; private set; }
 
         public FileInfoWrapper SelectedImageFile
         {
