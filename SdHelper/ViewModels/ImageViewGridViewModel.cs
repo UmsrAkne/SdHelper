@@ -14,6 +14,7 @@ namespace SdHelper.ViewModels
     public class ImageViewGridViewModel : BindableBase
     {
         private FileInfoWrapper selectedImageFile;
+        private int selectedImageIndex;
 
         /// <summary>
         /// デザイン画面でのプレビュー生成時に呼び出されるコンストラクタ。
@@ -34,6 +35,10 @@ namespace SdHelper.ViewModels
         public ImageViewGridViewModel(IImageFileProvider imageProvider)
         {
             ImageFiles = imageProvider.ImageFiles;
+            if (ImageFiles.Count > 0)
+            {
+                SelectedImageFile = ImageFiles[0];
+            }
         }
 
         public ObservableCollection<FileInfoWrapper> ImageFiles { get; private set; }
