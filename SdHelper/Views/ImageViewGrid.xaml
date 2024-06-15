@@ -29,13 +29,14 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ListView
             Grid.Row="0"
-            Grid.RowSpan="2"
+            Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalContentAlignment="Stretch"
             Background="{StaticResource BasicBgBrush}"
@@ -119,12 +120,37 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch" />
 
-        <Border Grid.Row="0" Grid.Column="2">
-            <Image Source="{Binding SelectedImageFile.FileInfo.FullName}" />
+        <TabControl
+            Grid.Row="0"
+            Grid.Column="2"
+            Background="{StaticResource BasicBgBrush}">
+            <TabItem Header="Scale">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Scale :" />
+                    <TextBox
+                        Width="35"
+                        Margin="4,0"
+                        Text="{Binding ScaleManagementViewModel.Scale, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDoubleConverter}}" />
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="1" Grid.Column="2">
+            <Canvas ClipToBounds="True">
+                <Image
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="{Binding SelectedImageFile.FileInfo.FullName}"
+                    Stretch="None">
+                    <Image.LayoutTransform>
+                        <ScaleTransform ScaleX="{Binding ScaleManagementViewModel.Scale}" ScaleY="{Binding ScaleManagementViewModel.Scale}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </Canvas>
         </Border>
 
         <StackPanel
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="2"
             Margin="2">
 

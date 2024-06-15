@@ -5,7 +5,7 @@ namespace SdHelper.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class ScaleManagementViewModel : BindableBase
     {
-        private double scale;
+        private double scale = 1.0;
         private bool lockScale;
 
         public double Scale { get => scale; set => SetProperty(ref scale, value); }
