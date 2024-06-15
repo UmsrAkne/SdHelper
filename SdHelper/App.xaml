@@ -8,5 +8,6 @@
         <SolidColorBrush x:Key="BasicBgBrush" Color="#333344" />
         <SolidColorBrush x:Key="BasicFgBrush" Color="#EEEEEE" />
         <views:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+        <views:BoolNegativeConverter x:Key="BoolNegativeConverter" />
     </Application.Resources>
 </prism:PrismApplication>

@@ -130,23 +130,28 @@
                     <TextBox
                         Width="35"
                         Margin="4,0"
+                        IsEnabled="{Binding ScaleManagementViewModel.IsFitDisplay, Converter={StaticResource BoolNegativeConverter}}"
                         Text="{Binding ScaleManagementViewModel.Scale, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDoubleConverter}}" />
+
+                    <Border Width="0" Margin="5,0" />
+
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ScaleManagementViewModel.IsFitDisplay}" />
+                    <TextBlock Text="画像をフィット表示" />
                 </StackPanel>
             </TabItem>
         </TabControl>
 
         <Border Grid.Row="1" Grid.Column="2">
-            <Canvas ClipToBounds="True">
-                <Image
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Source="{Binding SelectedImageFile.FileInfo.FullName}"
-                    Stretch="None">
-                    <Image.LayoutTransform>
-                        <ScaleTransform ScaleX="{Binding ScaleManagementViewModel.Scale}" ScaleY="{Binding ScaleManagementViewModel.Scale}" />
-                    </Image.LayoutTransform>
-                </Image>
-            </Canvas>
+            <Image
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Source="{Binding SelectedImageFile.FileInfo.FullName}"
+                Stretch="{Binding ScaleManagementViewModel.Stretch}">
+
+                <Image.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding ScaleManagementViewModel.Scale}" ScaleY="{Binding ScaleManagementViewModel.Scale}" />
+                </Image.LayoutTransform>
+            </Image>
         </Border>
 
         <StackPanel
