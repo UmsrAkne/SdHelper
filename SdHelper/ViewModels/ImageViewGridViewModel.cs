@@ -43,6 +43,8 @@ namespace SdHelper.ViewModels
 
         public ObservableCollection<FileInfoWrapper> ImageFiles { get; private set; }
 
+        public ScaleManagementViewModel ScaleManagementViewModel { get; init; } = new ();
+
         public FileInfoWrapper SelectedImageFile
         {
             get => selectedImageFile;
