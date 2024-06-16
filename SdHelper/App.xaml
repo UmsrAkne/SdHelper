@@ -2,9 +2,12 @@
     x:Class="SdHelper.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:prism="http://prismlibrary.com/">
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:views="clr-namespace:SdHelper.Views">
     <Application.Resources>
         <SolidColorBrush x:Key="BasicBgBrush" Color="#333344" />
         <SolidColorBrush x:Key="BasicFgBrush" Color="#EEEEEE" />
+        <views:StringToDoubleConverter x:Key="StringToDoubleConverter" />
+        <views:BoolNegativeConverter x:Key="BoolNegativeConverter" />
     </Application.Resources>
 </prism:PrismApplication>

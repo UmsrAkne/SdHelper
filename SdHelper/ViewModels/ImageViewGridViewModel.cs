@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -43,6 +44,8 @@ namespace SdHelper.ViewModels
 
         public ObservableCollection<FileInfoWrapper> ImageFiles { get; private set; }
 
+        public ScaleManagementViewModel ScaleManagementViewModel { get; init; } = new ();
+
         public FileInfoWrapper SelectedImageFile
         {
             get => selectedImageFile;
@@ -74,6 +77,16 @@ namespace SdHelper.ViewModels
                     SelectedImageFile.MetaData.Rate = (Rate)n;
                 }
             }
+        });
+
+        public DelegateCommand<string> CopyTextCommand => new DelegateCommand<string>((param) =>
+        {
+            if (string.IsNullOrWhiteSpace(param))
+            {
+                return;
+            }
+
+            Clipboard.SetText(param);
         });
 
         public void AddImageFiles(IEnumerable<FileInfoWrapper> images)
