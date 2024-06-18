@@ -39,7 +39,7 @@
         </TabItem>
 
         <TabItem Header="Prompt Note">
-            <views:PromptNote />
+            <views:PromptNote DataContext="{Binding PromptNoteViewModel}" />
         </TabItem>
     </TabControl>
 </Window>
