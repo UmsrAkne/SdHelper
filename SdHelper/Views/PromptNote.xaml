@@ -4,10 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
     d:DataContext="{d:DesignInstance viewModels:PromptNoteViewModel}"
     d:DesignHeight="300"
-    d:DesignWidth="300"
+    d:DesignWidth="600"
     Background="{StaticResource BasicBgBrush}"
     mc:Ignorable="d">
     <Grid>
@@ -17,7 +18,18 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <ListBox Grid.Column="0" Background="{StaticResource BasicBgBrush}" />
+        <ListBox
+            Grid.Column="0"
+            Background="{StaticResource BasicBgBrush}"
+            ItemsSource="{Binding ImageGenerationPrompts}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:ImageGenerationPrompt}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{StaticResource BasicFgBrush}" Text="{Binding Name.Text}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <GridSplitter
             Grid.Column="1"
