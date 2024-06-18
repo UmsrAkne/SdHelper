@@ -37,5 +37,9 @@
         <TabItem Header="Image View">
             <views:ImageViewGrid DataContext="{Binding ImageViewGridViewModel}" />
         </TabItem>
+
+        <TabItem Header="Prompt Note">
+            <views:PromptNote />
+        </TabItem>
     </TabControl>
 </Window>
