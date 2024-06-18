@@ -136,8 +136,18 @@
 
                     <Border Width="0" Margin="5,0" />
 
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ScaleManagementViewModel.IsFitDisplay}" />
-                    <TextBlock Text="画像をフィット表示" />
+                    <ContentControl>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding ScaleManagementViewModel.ToggleIsFitDisplayCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding ScaleManagementViewModel.IsFitDisplay}" />
+                            <TextBlock Text="画像をフィット表示" />
+                        </StackPanel>
+                    </ContentControl>
                 </StackPanel>
             </TabItem>
         </TabControl>
