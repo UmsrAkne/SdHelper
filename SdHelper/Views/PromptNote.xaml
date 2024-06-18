@@ -21,7 +21,8 @@
         <ListBox
             Grid.Column="0"
             Background="{StaticResource BasicBgBrush}"
-            ItemsSource="{Binding ImageGenerationPrompts}">
+            ItemsSource="{Binding ImageGenerationPrompts}"
+            SelectedItem="{Binding SelectedItem}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:ImageGenerationPrompt}">
                     <StackPanel Orientation="Horizontal">
@@ -37,7 +38,45 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch" />
 
-        <StackPanel Grid.Column="2" />
+        <Grid Grid.Column="2" Margin="2">
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource BasicFgBrush}" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="{Binding SelectedItem.Name.Text}" />
+
+            <ListBox
+                Grid.Row="1"
+                Background="{StaticResource BasicBgBrush}"
+                ItemsSource="{Binding SelectedItem.Prompt.Words}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=ActualWidth}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type models:Word}">
+                        <DataTemplate.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource BasicFgBrush}" />
+                            </Style>
+                        </DataTemplate.Resources>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Text, StringFormat={}{0}\,}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
 
     </Grid>
 </UserControl>

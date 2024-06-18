@@ -9,6 +9,7 @@ namespace SdHelper.ViewModels
     public class PromptNoteViewModel : BindableBase
     {
         private ObservableCollection<ImageGenerationPrompt> imageGenerationPrompts = new ();
+        private ImageGenerationPrompt selectedItem;
 
         public PromptNoteViewModel()
         {
@@ -19,6 +20,12 @@ namespace SdHelper.ViewModels
         {
             get => imageGenerationPrompts;
             private set => SetProperty(ref imageGenerationPrompts, value);
+        }
+
+        public ImageGenerationPrompt SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
         }
 
         [Conditional("DEBUG")]
@@ -35,6 +42,8 @@ namespace SdHelper.ViewModels
 
                 ImageGenerationPrompts.Add(p);
             }
+
+            SelectedItem = ImageGenerationPrompts[1];
         }
     }
 }

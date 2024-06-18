@@ -1,3 +1,5 @@
+using System.Collections.ObjectModel;
+using System.Linq;
 using Prism.Mvvm;
 
 namespace SdHelper.Models
@@ -6,6 +8,7 @@ namespace SdHelper.Models
     {
         private string text = string.Empty;
         private bool isTextChanged;
+        private ObservableCollection<Word> words = new ();
 
         public string Text
         {
@@ -20,5 +23,19 @@ namespace SdHelper.Models
         }
 
         public bool IsTextChanged { get => isTextChanged; set => SetProperty(ref isTextChanged, value); }
+
+        public ObservableCollection<Word> Words
+        {
+            get
+            {
+                if (IsTextChanged)
+                {
+                    words = new ObservableCollection<Word>(Text.Split(',').Select(s => new Word() { Text = s, }));
+                }
+
+                return words;
+            }
+            private set => SetProperty(ref words, value);
+        }
     }
 }
