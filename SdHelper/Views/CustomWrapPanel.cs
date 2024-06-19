@@ -1,6 +1,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using SdHelper.Models;
 
 namespace SdHelper.Views
 {
@@ -21,7 +22,7 @@ namespace SdHelper.Views
                 element.Measure(constraint);
                 var elementSize = element.DesiredSize;
 
-                var isBreak = element is FrameworkElement { Tag: string and "Break", };
+                var isBreak = element is FrameworkElement { DataContext: Word { IsNewLine: true, }, };
 
                 if (currentLineSize.Width + elementSize.Width > constraint.Width || isBreak)
                 {
@@ -56,7 +57,7 @@ namespace SdHelper.Views
             foreach (UIElement element in Children)
             {
                 var elementSize = element.DesiredSize;
-                var isBreak = element is FrameworkElement { Tag: string and "Break", };
+                var isBreak = element is FrameworkElement { DataContext: Word { IsNewLine: true, }, };
 
                 if (currentLineSize.Width + elementSize.Width > finalSize.Width || isBreak)
                 {
