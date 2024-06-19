@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
+    xmlns:views="clr-namespace:SdHelper.Views"
     d:DataContext="{d:DesignInstance viewModels:ImageViewGridViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -135,41 +136,23 @@
 
                     <Border Width="0" Margin="5,0" />
 
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding ScaleManagementViewModel.IsFitDisplay}" />
-                    <TextBlock Text="画像をフィット表示" />
+                    <ContentControl>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding ScaleManagementViewModel.ToggleIsFitDisplayCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox VerticalAlignment="Center" IsChecked="{Binding ScaleManagementViewModel.IsFitDisplay}" />
+                            <TextBlock Text="画像をフィット表示" />
+                        </StackPanel>
+                    </ContentControl>
                 </StackPanel>
             </TabItem>
         </TabControl>
 
-        <ContentControl Grid.Row="1" Grid.Column="2">
-            <ContentControl.Resources>
-                <DataTemplate x:Key="ScrollViewerTemplate">
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                        <Image Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.SelectedImageFile.FileInfo.FullName}" Stretch="None">
-                            <Image.LayoutTransform>
-                                <ScaleTransform ScaleX="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.ScaleManagementViewModel.Scale}" ScaleY="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}, Path=DataContext.ScaleManagementViewModel.Scale}" />
-                            </Image.LayoutTransform>
-                        </Image>
-                    </ScrollViewer>
-                </DataTemplate>
-
-                <DataTemplate x:Key="ImageTemplate">
-                    <Image Source="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContentControl}, Path=DataContext.SelectedImageFile.FileInfo.FullName}" Stretch="Uniform" />
-                </DataTemplate>
-            </ContentControl.Resources>
-
-            <ContentControl.Style>
-                <Style TargetType="ContentControl">
-                    <Setter Property="ContentTemplate" Value="{StaticResource ScrollViewerTemplate}" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ScaleManagementViewModel.IsFitDisplay}" Value="True">
-                            <Setter Property="ContentTemplate" Value="{StaticResource ImageTemplate}" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ContentControl.Style>
-
-        </ContentControl>
+        <views:ImagePreview Grid.Row="1" Grid.Column="2" />
 
         <StackPanel
             Grid.Row="2"

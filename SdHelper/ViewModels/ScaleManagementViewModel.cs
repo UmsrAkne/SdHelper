@@ -1,4 +1,5 @@
 using System.Windows.Media;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace SdHelper.ViewModels
@@ -32,5 +33,10 @@ namespace SdHelper.ViewModels
         }
 
         public Stretch Stretch { get => stretch; set => SetProperty(ref stretch, value); }
+
+        public DelegateCommand ToggleIsFitDisplayCommand => new DelegateCommand(() =>
+        {
+            IsFitDisplay = !IsFitDisplay;
+        });
     }
 }
