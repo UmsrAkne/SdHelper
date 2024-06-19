@@ -30,7 +30,7 @@ namespace SdHelper.Models
             {
                 if (IsTextChanged)
                 {
-                    words = new ObservableCollection<Word>(Text.Split(',').Select(s => new Word() { Text = s, }));
+                    words = new ObservableCollection<Word>(Text.Split(',').Select(s => new Word() { Text = s.Trim(' '), }));
                 }
 
                 return words;
