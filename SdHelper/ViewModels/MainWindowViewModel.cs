@@ -9,11 +9,12 @@ namespace SdHelper.ViewModels
     {
         private int tabIndex;
 
-        public MainWindowViewModel(ModelViewGridViewModel modelViewGridVm, ImageViewGridViewModel imageViewGridVm)
+        public MainWindowViewModel(ModelViewGridViewModel modelViewGridVm, ImageViewGridViewModel imageViewGridVm, PromptNoteViewModel promptNoteViewModel)
         {
             TitleBarText.Text = "Sd Helper";
             ModelViewGridViewModel = modelViewGridVm;
             ImageViewGridViewModel = imageViewGridVm;
+            PromptNoteViewModel = promptNoteViewModel;
 
             ChangeSelectedTabIndex(1); // デバッグビルド のときだけ実行されるメソッド
             SetVersion();
@@ -22,6 +23,8 @@ namespace SdHelper.ViewModels
         public ModelViewGridViewModel ModelViewGridViewModel { get; set; }
 
         public ImageViewGridViewModel ImageViewGridViewModel { get; set; }
+
+        public PromptNoteViewModel PromptNoteViewModel { get; set; }
 
         public int TabIndex { get => tabIndex; set => SetProperty(ref tabIndex, value); }
 
