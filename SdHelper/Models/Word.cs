@@ -7,5 +7,7 @@ namespace SdHelper.Models
     public class Word
     {
         public string Text { get; set; } = string.Empty;
+
+        public bool IsNewLine => Text is "\n" or "\r\n";
     }
 }
