@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SdHelper.Models"
     xmlns:viewModels="clr-namespace:SdHelper.ViewModels"
+    xmlns:views="clr-namespace:SdHelper.Views"
     d:DataContext="{d:DesignInstance viewModels:PromptNoteViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="600"
@@ -26,7 +27,7 @@
         </DataTemplate>
 
         <ItemsPanelTemplate x:Key="PromptListBoxItemsPanelTemplate">
-            <WrapPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=ActualWidth}" />
+            <views:CustomWrapPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=ActualWidth}" />
         </ItemsPanelTemplate>
     </UserControl.Resources>
 
