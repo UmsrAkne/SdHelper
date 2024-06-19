@@ -11,6 +11,25 @@
     d:DesignWidth="600"
     Background="{StaticResource BasicBgBrush}"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="PromptListBoxDataTemplate" DataType="{x:Type models:Word}">
+            <DataTemplate.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Foreground" Value="{StaticResource BasicFgBrush}" />
+                </Style>
+            </DataTemplate.Resources>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Text, StringFormat={}{0}\,}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <ItemsPanelTemplate x:Key="PromptListBoxItemsPanelTemplate">
+            <WrapPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=ActualWidth}" />
+        </ItemsPanelTemplate>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.4*" />
@@ -48,34 +67,28 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding SelectedItem.Name.Text}" />
 
-            <ListBox
-                Grid.Row="1"
-                Background="{StaticResource BasicBgBrush}"
-                ItemsSource="{Binding SelectedItem.Prompt.Words}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=ActualWidth}" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+            <DockPanel Grid.Row="1">
+                <TextBlock DockPanel.Dock="Top" Text="Prompt :" />
+                <ListBox
+                    Background="{StaticResource BasicBgBrush}"
+                    ItemTemplate="{StaticResource PromptListBoxDataTemplate}"
+                    ItemsPanel="{StaticResource PromptListBoxItemsPanelTemplate}"
+                    ItemsSource="{Binding SelectedItem.Prompt.Words}" />
+            </DockPanel>
 
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type models:Word}">
-                        <DataTemplate.Resources>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="Foreground" Value="{StaticResource BasicFgBrush}" />
-                            </Style>
-                        </DataTemplate.Resources>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Text, StringFormat={}{0}\,}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DockPanel Grid.Row="2">
+                <TextBlock DockPanel.Dock="Top" Text="Negative Prompt :" />
+                <ListBox
+                    Background="{StaticResource BasicBgBrush}"
+                    ItemTemplate="{StaticResource PromptListBoxDataTemplate}"
+                    ItemsPanel="{StaticResource PromptListBoxItemsPanelTemplate}"
+                    ItemsSource="{Binding SelectedItem.NegativePrompt.Words}" />
+            </DockPanel>
         </Grid>
 
     </Grid>
