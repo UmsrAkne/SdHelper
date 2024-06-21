@@ -14,6 +14,8 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <views:WordConverter x:Key="WordConverter" />
+
         <DataTemplate x:Key="PromptListBoxDataTemplate" DataType="{x:Type models:Word}">
             <DataTemplate.Resources>
                 <Style TargetType="TextBlock">
@@ -22,7 +24,7 @@
             </DataTemplate.Resources>
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Text, StringFormat={}{0}\,}" />
+                <TextBlock Text="{Binding Text, Converter={StaticResource WordConverter}, StringFormat={}{0}\,}" />
             </StackPanel>
         </DataTemplate>
 
