@@ -36,7 +36,7 @@ namespace SdHelper.ViewModels
                 var p = new ImageGenerationPrompt()
                 {
                     Name = new TextWrapper() { Text = $"testName{i}", },
-                    Prompt = new TextWrapper() { Text = $"best quality, test prompt, ((no {i})), (test), text, br, \n ,(test)", },
+                    Prompt = new TextWrapper() { Text = $"best quality, test prompt, ((no {i})), (test), text, br, \n, (test), \n, \n, (test)", },
                     NegativePrompt = new TextWrapper() { Text = $"low quality, no {i}", },
                 };
 
