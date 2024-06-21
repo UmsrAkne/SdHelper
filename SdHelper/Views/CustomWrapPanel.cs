@@ -16,6 +16,7 @@ namespace SdHelper.Views
         {
             var currentLineSize = new Size(0, 0);
             var panelSize = new Size(0, 0);
+            var lineMaxWidth = double.IsInfinity(constraint.Width) ? double.MaxValue : constraint.Width;
 
             foreach (UIElement element in Children)
             {
@@ -30,6 +31,11 @@ namespace SdHelper.Views
                     panelSize.Height += currentLineSize.Height;
 
                     currentLineSize = isBreak ? new Size(0, 0) : elementSize;
+
+                    if (isBreak)
+                    {
+                        currentLineSize.Width = lineMaxWidth; // 改行要素だった場合は、描画する行を維持する。
+                    }
                 }
                 else
                 {
@@ -53,6 +59,7 @@ namespace SdHelper.Views
         {
             var currentLineSize = new Size(0, 0);
             double currentY = 0;
+            var cy = currentLineSize.Height;
 
             foreach (UIElement element in Children)
             {
@@ -61,8 +68,21 @@ namespace SdHelper.Views
 
                 if (currentLineSize.Width + elementSize.Width > finalSize.Width || isBreak)
                 {
-                    currentY += currentLineSize.Height;
-                    currentLineSize = isBreak ? new Size(0, 0) : elementSize;
+                    if (isBreak)
+                    {
+                        currentY += currentLineSize.Height;
+                        cy = currentLineSize.Height;
+
+                        currentLineSize.Width += elementSize.Width;
+                        currentLineSize.Height = Math.Max(elementSize.Height, currentLineSize.Height);
+
+                        currentY -= cy;
+                    }
+                    else if (currentLineSize.Width + elementSize.Width > finalSize.Width)
+                    {
+                        currentY += currentLineSize.Height;
+                        cy = currentLineSize.Height;
+                    }
                 }
                 else
                 {
@@ -71,6 +91,18 @@ namespace SdHelper.Views
                 }
 
                 element.Arrange(new Rect(new Point(currentLineSize.Width - elementSize.Width, currentY), elementSize));
+
+                if (!isBreak)
+                {
+                    continue;
+                }
+
+                // 要素が改行の指示だった場合に実行される。
+                // 行末に要素を表示するのに、currentY を維持していたため、 描画位置を cy の値だけ下へずらす。
+                currentY += cy;
+
+                // 次の要素からは、描画は新しい行の左端から開始するので、行の幅を 0 に設定。
+                currentLineSize.Width = 0;
             }
 
             return finalSize;
