@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdHelper", "SdHelper\SdHelper.csproj", "{B28CAF75-06BF-4C9D-A961-0777941FA184}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SdHelperTests", "SdHelperTests\SdHelperTests.csproj", "{A8327FB7-8251-4D04-A1C8-C9D6B5DD97BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B28CAF75-06BF-4C9D-A961-0777941FA184}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B28CAF75-06BF-4C9D-A961-0777941FA184}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28CAF75-06BF-4C9D-A961-0777941FA184}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8327FB7-8251-4D04-A1C8-C9D6B5DD97BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8327FB7-8251-4D04-A1C8-C9D6B5DD97BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8327FB7-8251-4D04-A1C8-C9D6B5DD97BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8327FB7-8251-4D04-A1C8-C9D6B5DD97BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

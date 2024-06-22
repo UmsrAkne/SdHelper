@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Prism.Mvvm;
 
 namespace SdHelper.Models
@@ -30,7 +31,12 @@ namespace SdHelper.Models
             {
                 if (IsTextChanged)
                 {
-                    words = new ObservableCollection<Word>(Text.Split(',').Select(s => new Word() { Text = s.Trim(' '), }));
+                    var formatted = Regex.Replace(Text, " *\n *", ",\n,");
+                    formatted = Regex.Replace(formatted, ",,\n", ",\n");
+
+                    words = new ObservableCollection<Word>(formatted.Split(',')
+                        .Select(s => new Word() { Text = s.Trim(' '), })
+                        .Where(w => !w.IsEmpty));
                 }
 
                 return words;
