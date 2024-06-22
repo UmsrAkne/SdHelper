@@ -47,6 +47,8 @@ namespace SdHelper.Models
                         if (w.IsOpeningBrackets)
                         {
                             inParentheses = true;
+                            const string pattern = "^\\(+";
+                            w.BracketsCount = Regex.Match(w.Text, pattern).Length; // 開括弧のカウント
                         }
 
                         w.IsInParentheses = inParentheses;
@@ -54,6 +56,8 @@ namespace SdHelper.Models
                         if (w.IsClosingBrackets)
                         {
                             inParentheses = false;
+                            const string pattern = "\\)+$";
+                            w.BracketsCount = Regex.Match(w.Text, pattern).Length; // 閉じ括弧のカウント
                         }
                     }
                 }

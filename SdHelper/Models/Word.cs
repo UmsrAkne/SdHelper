@@ -26,5 +26,10 @@ namespace SdHelper.Models
         /// このテキストが丸括弧の中に配置されているかを表します。
         /// </summary>
         public bool IsInParentheses { get; set; }
+
+        /// <summary>
+        /// このテキストについている括弧の数を表します
+        /// </summary>
+        public int BracketsCount { get; set; }
     }
 }
