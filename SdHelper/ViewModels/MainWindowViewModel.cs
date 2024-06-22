@@ -39,7 +39,7 @@ namespace SdHelper.ViewModels
         [Conditional("RELEASE")]
         private void SetVersion()
         {
-            TitleBarText.Version = "version " + "20240621" + "a";
+            TitleBarText.Version = "version " + "20240622" + "a";
         }
     }
 }
