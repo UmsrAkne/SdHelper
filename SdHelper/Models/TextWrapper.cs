@@ -37,6 +37,25 @@ namespace SdHelper.Models
                     words = new ObservableCollection<Word>(formatted.Split(',')
                         .Select(s => new Word() { Text = s.Trim(' '), })
                         .Where(w => !w.IsEmpty));
+
+                    var inParentheses = false;
+                    foreach (var w in words)
+                    {
+                        w.IsOpeningBrackets = w.Text.StartsWith("(");
+                        w.IsClosingBrackets = w.Text.EndsWith(")");
+
+                        if (w.IsOpeningBrackets)
+                        {
+                            inParentheses = true;
+                        }
+
+                        w.IsInParentheses = inParentheses;
+
+                        if (w.IsClosingBrackets)
+                        {
+                            inParentheses = false;
+                        }
+                    }
                 }
 
                 return words;
