@@ -9,5 +9,7 @@ namespace SdHelper.Models
         public string Text { get; set; } = string.Empty;
 
         public bool IsNewLine => Text is "\n" or "\r\n";
+
+        public bool IsEmpty => !IsNewLine && Text == string.Empty;
     }
 }
