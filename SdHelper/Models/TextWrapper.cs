@@ -37,6 +37,29 @@ namespace SdHelper.Models
                     words = new ObservableCollection<Word>(formatted.Split(',')
                         .Select(s => new Word() { Text = s.Trim(' '), })
                         .Where(w => !w.IsEmpty));
+
+                    var inParentheses = false;
+                    foreach (var w in words)
+                    {
+                        w.IsOpeningBrackets = w.Text.StartsWith("(");
+                        w.IsClosingBrackets = w.Text.EndsWith(")");
+
+                        if (w.IsOpeningBrackets)
+                        {
+                            inParentheses = true;
+                            const string pattern = "^\\(+";
+                            w.BracketsCount = Regex.Match(w.Text, pattern).Length; // 開括弧のカウント
+                        }
+
+                        w.IsInParentheses = inParentheses;
+
+                        if (w.IsClosingBrackets)
+                        {
+                            inParentheses = false;
+                            const string pattern = "\\)+$";
+                            w.BracketsCount = Regex.Match(w.Text, pattern).Length; // 閉じ括弧のカウント
+                        }
+                    }
                 }
 
                 return words;
