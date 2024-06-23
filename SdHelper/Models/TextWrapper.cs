@@ -41,6 +41,8 @@ namespace SdHelper.Models
                     var inParentheses = false;
                     foreach (var w in words)
                     {
+                        w.IsEnabled = !Regex.IsMatch(w.Text, @"^/\*.*\*/$");
+
                         w.IsOpeningBrackets = w.Text.StartsWith("(");
                         w.IsClosingBrackets = w.Text.EndsWith(")");
 
