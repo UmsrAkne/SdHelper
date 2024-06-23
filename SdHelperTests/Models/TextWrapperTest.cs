@@ -107,5 +107,23 @@ namespace SdHelperTests.Models
             var words = textWrapper.Words;
             Assert.That(words.Select(w => w.Strength).ToList(), Is.EqualTo(expected));
         }
+
+        [Test]
+        public void プロンプトの無視を読み取るかのテスト()
+        {
+            var textWrapper = new TextWrapper
+            {
+                Text = "test, /*(test:1.2)*/, /*((test word:1.1))*/, (test, test:1.3) \n /*(((test:1.4)))*/, \n",
+            };
+
+            // テキストが括弧内に入っているかを識別できているか確認する
+            var expected = new List<bool>
+            {
+                true, false, false, true, true, true, false, true,
+            };
+
+            var words = textWrapper.Words;
+            Assert.That(words.Select(w => w.IsEnabled).ToList(), Is.EqualTo(expected));
+        }
     }
 }
