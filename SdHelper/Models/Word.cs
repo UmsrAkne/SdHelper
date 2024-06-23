@@ -31,5 +31,10 @@ namespace SdHelper.Models
         /// このテキストについている括弧の数を表します
         /// </summary>
         public int BracketsCount { get; set; }
+
+        /// <summary>
+        /// このテキストの適用の強さを表します。
+        /// </summary>
+        public decimal Strength { get; set; } = 1.0m;
     }
 }
