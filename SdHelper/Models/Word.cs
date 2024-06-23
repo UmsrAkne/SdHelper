@@ -11,5 +11,25 @@ namespace SdHelper.Models
         public bool IsNewLine => Text is "\n" or "\r\n";
 
         public bool IsEmpty => !IsNewLine && Text == string.Empty;
+
+        /// <summary>
+        /// このテキストが開き括弧で始まっているかを表します。
+        /// </summary>
+        public bool IsOpeningBrackets { get; set; }
+
+        /// <summary>
+        /// このテキストが閉じ括弧で終わっているかを表します。
+        /// </summary>
+        public bool IsClosingBrackets { get; set; }
+
+        /// <summary>
+        /// このテキストが丸括弧の中に配置されているかを表します。
+        /// </summary>
+        public bool IsInParentheses { get; set; }
+
+        /// <summary>
+        /// このテキストについている括弧の数を表します
+        /// </summary>
+        public int BracketsCount { get; set; }
     }
 }

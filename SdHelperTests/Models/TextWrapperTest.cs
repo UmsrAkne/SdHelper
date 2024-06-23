@@ -47,5 +47,46 @@ namespace SdHelperTests.Models
 
             Assert.That(words.Select(w => w.Text).ToList(), Is.EqualTo(expectedWords));
         }
+
+        [Test]
+        public void 括弧を識別できているかテスト()
+        {
+            var textWrapper = new TextWrapper
+            {
+                Text = "test, (test), test word, ((test word:1.1)), (test, test:1.2) \n \n (((test))), \n",
+            };
+
+            // テキストが括弧内に入っているかを識別できているか確認する
+            var expected = new List<bool>
+            {
+                false, true, false, true, true, true, false, false, true, false,
+            };
+
+            var words = textWrapper.Words;
+
+
+            // Check if words match expected values
+            Assert.That(words.Select(w => w.IsInParentheses).ToList(), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void 括弧のネスト数のカウントテスト()
+        {
+            var textWrapper = new TextWrapper
+            {
+                Text = "test, (test), test word, ((test word:1.1)), (test, test:1.2) \n \n (((test))), \n",
+            };
+
+            // テキストが括弧内に入っているかを識別できているか確認する
+            var expected = new List<int>
+            {
+                0, 1, 0, 2, 1, 1, 0, 0, 3, 0,
+            };
+
+            var words = textWrapper.Words;
+
+            // Check if words match expected values
+            Assert.That(words.Select(w => w.BracketsCount).ToList(), Is.EqualTo(expected));
+        }
     }
 }
