@@ -1,11 +1,15 @@
+using Prism.Mvvm;
+
 namespace SdHelper.Models
 {
     /// <summary>
     /// Prompt を構成する一つ一つの単語（熟語）を表します。
     /// Prompt を単語ごとに操作するための機能を実装します。
     /// </summary>
-    public class Word
+    public class Word : BindableBase
     {
+        private bool isEnabled = true;
+
         public string Text { get; set; } = string.Empty;
 
         public bool IsNewLine => Text is "\n" or "\r\n";
@@ -31,5 +35,15 @@ namespace SdHelper.Models
         /// このテキストについている括弧の数を表します
         /// </summary>
         public int BracketsCount { get; set; }
+
+        /// <summary>
+        /// このテキストの適用の強さを表します。
+        /// </summary>
+        public decimal Strength { get; set; } = 1.0m;
+
+        /// <summary>
+        /// このワードが有効かどうかを表します。
+        /// </summary>
+        public bool IsEnabled { get => isEnabled; set => SetProperty(ref isEnabled, value); }
     }
 }

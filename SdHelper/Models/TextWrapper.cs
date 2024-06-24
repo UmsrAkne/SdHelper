@@ -41,6 +41,8 @@ namespace SdHelper.Models
                     var inParentheses = false;
                     foreach (var w in words)
                     {
+                        w.IsEnabled = !Regex.IsMatch(w.Text, @"^/\*.*\*/$");
+
                         w.IsOpeningBrackets = w.Text.StartsWith("(");
                         w.IsClosingBrackets = w.Text.EndsWith(")");
 
@@ -58,6 +60,13 @@ namespace SdHelper.Models
                             inParentheses = false;
                             const string pattern = "\\)+$";
                             w.BracketsCount = Regex.Match(w.Text, pattern).Length; // 閉じ括弧のカウント
+
+                            const string strengthPattern = @":(\d\.(\d{1,2})?)";
+                            var m = Regex.Match(w.Text, strengthPattern);
+                            if (m.Success && decimal.TryParse(m.Groups[1].Value, out var d))
+                            {
+                                w.Strength = d;
+                            }
                         }
                     }
                 }
