@@ -108,6 +108,9 @@
 
                     <StackPanel Margin="6,2">
 
+                        <TextBlock Text="{Binding ModelFilePath, StringFormat=Model Path : {0}}" />
+                        <TextBlock Text="{Binding PreviewImageFilePath, StringFormat=Image Path : {0}}" />
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding PreviewImageRect.Width}" />
                             <TextBlock Margin="5,0" Text="x" />

@@ -20,6 +20,8 @@ namespace SdHelper.ViewModels
         private ImageSource previewImageSource;
         private FileInfo tempPreviewImageFileInfo;
         private bool waitForConfirm;
+        private string previewImageFilePath = string.Empty;
+        private string modelFilePath = string.Empty;
 
         public ObservableCollection<FileInfoWrapper> ModelFileInfos { get; set; } = new ();
 
@@ -37,10 +39,17 @@ namespace SdHelper.ViewModels
                         ? new BitmapImage(new Uri(exceptImagePath))
                         : null;
 
+                    if (PreviewImageSource != null)
+                    {
+                        PreviewImageFilePath = exceptImagePath;
+                    }
+
                     var jsonPath = value.GetFullNameWithoutExtension() + ".json";
                     ModelDetail = File.Exists(jsonPath)
                         ? JsonConvert.DeserializeObject<ModelDetail>(File.ReadAllText(jsonPath))
                         : new ModelDetail();
+
+                    ModelFilePath = value.GetFullNameWithoutExtension() + ".safetensors";
 
                     RaisePropertyChanged(nameof(ModelDetail));
 
@@ -81,6 +90,14 @@ namespace SdHelper.ViewModels
         /// プレビュー画像が変更が未確定の時に true それ以外の時は false
         /// </value>
         public bool WaitForConfirm { get => waitForConfirm; set => SetProperty(ref waitForConfirm, value); }
+
+        public string PreviewImageFilePath
+        {
+            get => previewImageFilePath;
+            private set => SetProperty(ref previewImageFilePath, value);
+        }
+
+        public string ModelFilePath { get => modelFilePath; set => SetProperty(ref modelFilePath, value); }
 
         public DelegateCommand JsonOutputCommand => new DelegateCommand(() =>
         {
