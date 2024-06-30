@@ -30,8 +30,6 @@ namespace SdHelper.Views
                     panelSize.Width = Math.Max(currentLineSize.Width, panelSize.Width);
                     panelSize.Height += currentLineSize.Height;
 
-                    currentLineSize = isBreak ? new Size(0, 0) : elementSize;
-
                     if (isBreak)
                     {
                         currentLineSize.Width = lineMaxWidth; // 改行要素だった場合は、描画する行を維持する。
@@ -66,10 +64,12 @@ namespace SdHelper.Views
                 var elementSize = element.DesiredSize;
                 var isBreak = element is FrameworkElement { DataContext: Word { IsNewLine: true, }, };
 
+                // 行の幅がパネル全体のサイズより大きくなったパターン、または改行命令がある場合
                 if (currentLineSize.Width + elementSize.Width > finalSize.Width || isBreak)
                 {
                     if (isBreak)
                     {
+                        // データコンテキストに改行の命令が含まれるパターン
                         currentY += currentLineSize.Height;
                         cy = currentLineSize.Height;
 
@@ -78,18 +78,24 @@ namespace SdHelper.Views
 
                         currentY -= cy;
                     }
-                    else if (currentLineSize.Width + elementSize.Width > finalSize.Width)
+                    else
                     {
+                        // 行の幅がパネル全体のサイズより大きくなったパターン。
+                        // 現在の行のサイズを、設置する要素の幅に設定する。
+                        // currentLineSize.Width = 0 にすると、改行後の最初の要素の開始位置がずれるため、表示されなくなる。
+                        currentLineSize.Width = elementSize.Width;
                         currentY += currentLineSize.Height;
                         cy = currentLineSize.Height;
                     }
                 }
                 else
                 {
+                    // 現在の行に要素を追加
                     currentLineSize.Width += elementSize.Width;
                     currentLineSize.Height = Math.Max(elementSize.Height, currentLineSize.Height);
                 }
 
+                // 要素の位置を確定。
                 element.Arrange(new Rect(new Point(currentLineSize.Width - elementSize.Width, currentY), elementSize));
 
                 if (!isBreak)
